@@ -81,7 +81,7 @@ def main(config):
     msg = model.load_state_dict(load_state_dict, strict=False)
     logger.info(f"resume model: {msg}")
 
-    # collect video + several texts
+    # load video + several texts
     # video clip consists of 300 frames (10 seconds at 30 FPS)
     file_path = hf_hub_download(
         repo_id="nielsr/video-demo", filename="eating_spaghetti.mp4", repo_type="dataset"
@@ -90,7 +90,7 @@ def main(config):
 
     # sample 16 frames
     vr.seek(0)
-    indices = sample_frame_indices(clip_len=16, frame_sample_rate=4, seg_len=len(vr))
+    indices = sample_frame_indices(clip_len=1, frame_sample_rate=1, seg_len=len(vr))
     buffer = vr.get_batch(indices).asnumpy()
 
     # create a list of NumPy arrays
@@ -99,6 +99,8 @@ def main(config):
     feature_extractor = VideoMAEFeatureExtractor.from_pretrained("MCG-NJU/videomae-base-finetuned-kinetics")
     inputs = feature_extractor(video, return_tensors="pt")
     pixel_values = inputs.pixel_values.to(device)
+
+    print("Shape of pixel values:", pixel_values.shape)
 
     text_labels = tokenize(["playing sports", "eating spaghetti"])
 
