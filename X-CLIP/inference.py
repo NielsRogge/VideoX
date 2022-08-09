@@ -107,7 +107,9 @@ def main(config):
     # inference
     model.eval()
     with torch.no_grad():
-        outputs = model(image=pixel_values, text=text_labels)
+        logits = model(image=pixel_values, text=text_labels)
+        probs = logits.softmax(dim=1)
+        print("Probs:", probs)
 
 
 if __name__ == '__main__':
