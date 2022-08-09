@@ -113,7 +113,7 @@ if __name__ == '__main__':
     args, config = parse_option()
 
     # seed
-    seed = config.SEED + dist.get_rank()
+    seed = config.SEED
     torch.manual_seed(seed)
     np.random.seed(seed)
     random.seed(seed)
