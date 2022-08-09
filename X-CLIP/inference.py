@@ -90,7 +90,7 @@ def main(config):
 
     # sample 16 frames
     vr.seek(0)
-    indices = sample_frame_indices(clip_len=1, frame_sample_rate=1, seg_len=len(vr))
+    indices = sample_frame_indices(clip_len=8, frame_sample_rate=1, seg_len=len(vr))
     buffer = vr.get_batch(indices).asnumpy()
 
     # create a list of NumPy arrays
