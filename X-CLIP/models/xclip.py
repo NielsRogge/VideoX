@@ -107,6 +107,8 @@ class XCLIP(CLIP):
         b,t,c,h,w = image.size()
         image = image.reshape(-1,c,h,w)
 
+        print("Shape of image before encoding:", image.shape)
+
         cls_features, img_features = self.encode_image(image)
         img_features = self.prompts_visual_ln(img_features)
         img_features = img_features @ self.prompts_visual_proj
