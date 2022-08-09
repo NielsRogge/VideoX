@@ -88,7 +88,7 @@ def main(config):
     )
     vr = VideoReader(file_path, num_threads=1, ctx=cpu(0))
 
-    # sample 16 frames
+    # sample 8 frames
     vr.seek(0)
     indices = sample_frame_indices(clip_len=8, frame_sample_rate=1, seg_len=len(vr))
     buffer = vr.get_batch(indices).asnumpy()
@@ -102,7 +102,7 @@ def main(config):
 
     print("Shape of pixel values:", pixel_values.shape)
 
-    text_labels = tokenize(["playing sports", "eating spaghetti"])
+    text_labels = tokenize(["playing sports", "eating spaghetti", "go shopping"])
 
     # inference
     model.eval()
