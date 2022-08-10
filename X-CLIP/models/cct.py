@@ -115,6 +115,9 @@ class CrossFrameCommunicationTransformer(nn.Module):
         x = self.ln_pre(x)
 
         x = x.permute(1, 0, 2)
+
+        print("Shape before the transformer:", x.shape)
+
         x = self.transformer(x)
         x = x.permute(1, 0, 2)
 
