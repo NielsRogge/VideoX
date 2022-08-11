@@ -56,11 +56,10 @@ class CrossFramelAttentionBlock(nn.Module):
         msg_token = msg_token.view(self.T, 1, b, d).permute(1,2,0,3)
         
         x = torch.cat([x, msg_token], dim=0)
+        x = x.view(l+1, -1, d)
 
         print("Shape of hidden states after concatentation:", x.shape)
         print("Initial values of hidden states after concatentation:", x[:3, 0, :3])
-        
-        x = x.view(l+1, -1, d)
 
         x = x + self.drop_path(self.attention(self.ln_1(x)))
         x = x[:l,:,:]
