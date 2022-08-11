@@ -35,6 +35,7 @@ class CrossFramelAttentionBlock(nn.Module):
 
 
     def forward(self, x):
+        print("Shape of hidden states:", x.shape)
         l, bt, d = x.size()
         b = bt // self.T
         x = x.view(l, b, self.T, d) 

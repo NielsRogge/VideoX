@@ -101,14 +101,14 @@ def main(config):
     pixel_values = inputs.pixel_values.to(device)
 
     print("Shape of pixel values:", pixel_values.shape)
-    print("Saving and pushing pixel values to the hub...")
-    torch.save(pixel_values, "pixel_values.pt")
-    api = HfApi()
-    api.upload_file(path_or_fileobj="pixel_values.pt", 
-                    path_in_repo="pixel_values.pt", 
-                    repo_id="hf-internal-testing/spaghetti-video-8-frames",
-                    repo_type="dataset",
-    )
+    # print("Saving and pushing pixel values to the hub...")
+    # torch.save(pixel_values, "pixel_values.pt")
+    # api = HfApi()
+    # api.upload_file(path_or_fileobj="pixel_values.pt", 
+    #                 path_in_repo="pixel_values.pt", 
+    #                 repo_id="hf-internal-testing/spaghetti-video-8-frames",
+    #                 repo_type="dataset",
+    # )
 
     text_labels = tokenize(["playing sports", "eating spaghetti", "go shopping"])
 
