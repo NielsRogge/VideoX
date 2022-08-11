@@ -35,7 +35,7 @@ class CrossFramelAttentionBlock(nn.Module):
 
 
     def forward(self, x):
-        print("Shape of hidden states:", x.shape)
+        print("Shape of hidden states before attention:", x.shape)
         l, bt, d = x.size()
         b = bt // self.T
         x = x.view(l, b, self.T, d) 
@@ -115,9 +115,10 @@ class CrossFrameCommunicationTransformer(nn.Module):
         
         x = self.ln_pre(x)
 
-        x = x.permute(1, 0, 2)
+        print("Initial hidden states:", x.shape)
+        print("Initial values of hidden states:", x[0,:3,:3])
 
-        print("Shape before the transformer:", x.shape)
+        x = x.permute(1, 0, 2)
 
         x = self.transformer(x)
         x = x.permute(1, 0, 2)
