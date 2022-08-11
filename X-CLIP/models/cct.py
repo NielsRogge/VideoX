@@ -136,6 +136,9 @@ class CrossFrameCommunicationTransformer(nn.Module):
 
         cls_x = self.ln_post(x[:, 0, :])
 
+        print("Shape of pooled output:", cls_x.shape)
+        print("Initial values of pooled output:", cls_x[0,:3])
+
         if self.proj is not None:
             cls_x = cls_x @ self.proj
         
