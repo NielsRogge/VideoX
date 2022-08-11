@@ -88,11 +88,16 @@ class XCLIP(CLIP):
         return self.visual(image)
 
     def encode_text(self, text):
+        print("Shape of input_ids:", text.shape)
+
         x = self.token_embedding(text)
         eos_indx = text.argmax(dim=-1)
         K, N1, C = x.shape
 
         x = x + self.positional_embedding
+        
+        print("Initial values of hidden states before Text encoder:", x[0,:3,:3])
+        
         x = x.permute(1, 0, 2)  # NLD -> LND
         x = self.transformer(x)
         x = x.permute(1, 0, 2)  # LND -> NLD
