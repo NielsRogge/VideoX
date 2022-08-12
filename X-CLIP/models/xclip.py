@@ -106,6 +106,9 @@ class XCLIP(CLIP):
         # take features from the eot embedding (eot_token is the highest number in each sequence)
         x = x[torch.arange(x.shape[0]), eos_indx] @ self.text_projection
         x = x.reshape(K, -1)
+        
+        print("Initial values of the text pooled output:", x[0,:3])
+        
         return x
 
     def encode_video(self, image):
