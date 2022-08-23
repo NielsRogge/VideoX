@@ -131,6 +131,9 @@ class XCLIP(CLIP):
         cls_features = cls_features.view(b, t, -1)
         img_features = img_features.view(b,t,-1,cls_features.shape[-1])
         
+        print("Shape of MIT input:", cls_features.shape)
+        print("Initial values of MIT input:", cls_features[0,:3,:3])
+        
         video_features = self.mit(cls_features)
 
         print("Shape of output of MIT:", video_features.shape)
