@@ -53,8 +53,10 @@ class QuickGELU(nn.Module):
         return x * torch.sigmoid(1.702 * x)
 
 class ResidualAttentionBlock(nn.Module):
-    def __init__(self, d_model: int, n_head: int, attn_mask: torch.Tensor = None, ):
+    def __init__(self, d_model: int, n_head: int, attn_mask: torch.Tensor = None, print_values=False):
         super().__init__()
+
+        self.print_values = print_values
 
         self.attn = nn.MultiheadAttention(d_model, n_head,)
         self.ln_1 = LayerNorm(d_model)
@@ -72,19 +74,22 @@ class ResidualAttentionBlock(nn.Module):
         return self.attn(x, x, x, need_weights=False, attn_mask=self.attn_mask)[0]
 
     def forward(self, x: torch.Tensor):
-        print("Hidden states before self-attention:", x[:3,0,:3])
+        if self.print_values:
+            print("Hidden states before self-attention:", x[:3,0,:3])
 
-        print("Hidden states after layer norm 1:", self.ln_1(x)[:3,0,:3])
+            print("Hidden states after layer norm 1:", self.ln_1(x)[:3,0,:3])
 
-        print("Hidden states after self-attention:", self.attention(self.ln_1(x))[:3,0,:3])
+            print("Hidden states after self-attention:", self.attention(self.ln_1(x))[:3,0,:3])
 
         x = x + self.attention(self.ln_1(x))
 
-        print("Hidden states after self-attention + residual:", x[:3,0,:3])
+        if self.print_values:
+            print("Hidden states after self-attention + residual:", x[:3,0,:3])
 
         x = x + self.mlp(self.ln_2(x))
 
-        print("Hidden states after MLP:", x[:3,0,:3])
+        if self.print_values:
+            print("Hidden states after MLP:", x[:3,0,:3])
         return x
 
 class Transformer(nn.Module):
@@ -92,7 +97,7 @@ class Transformer(nn.Module):
         super().__init__()
         self.width = width
         self.layers = layers
-        self.resblocks = nn.Sequential(*[ResidualAttentionBlock(width, heads, attn_mask) for _ in range(layers)])
+        self.resblocks = nn.Sequential(*[ResidualAttentionBlock(width, heads, attn_mask, idx==0) for idx in range(layers)])
 
     def forward(self, x: torch.Tensor):
         return self.resblocks(x)
