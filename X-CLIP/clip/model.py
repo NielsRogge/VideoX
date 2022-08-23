@@ -83,9 +83,13 @@ class ResidualAttentionBlock(nn.Module):
 
         if self.print_values:
             print("Query weights:", self.attn.in_proj_weight.data[:512, :][:3,:3])
+            print("Query bias:", self.attn.in_proj_bias.data[:512][:3])
             print("Key weights:", self.attn.in_proj_weight.data[512:512*2,:][:3,:3])
+            print("Key bias:", self.attn.in_proj_bias.data[512:512*2][:3])
             print("Value weights:", self.attn.in_proj_weight.data[:-512:,:][:3,:3])
-            print("Out projection:", self.attn.out_proj.weight[:3,:3])    
+            print("Value bias:", self.attn.in_proj_bias.data[:-512:][:3])
+            print("Out projection weights:", self.attn.out_proj.weight[:3,:3])  
+            print("Out projection bias:", self.attn.out_proj.bias[:3])    
 
         x = x + self.attention(self.ln_1(x))
 
