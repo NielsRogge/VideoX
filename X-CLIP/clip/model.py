@@ -85,7 +85,7 @@ class ResidualAttentionBlock(nn.Module):
             print("Query weights:", self.attn.in_proj_weight.data[:512, :][:3,:3])
             print("Key weights:", self.attn.in_proj_weight.data[512:512*2,:][:3,:3])
             print("Value weights:", self.attn.in_proj_weight.data[:-512:,:][:3,:3])
-            print("Out projection:", self.attn.out_proj.data[:3,:3])    
+            print("Out projection:", self.attn.out_proj.weight[:3,:3])    
 
         x = x + self.attention(self.ln_1(x))
 
