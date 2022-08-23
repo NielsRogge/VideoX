@@ -143,4 +143,7 @@ class CrossFrameCommunicationTransformer(nn.Module):
         if self.proj is not None:
             cls_x = cls_x @ self.proj
         
+        print("Shape of cls features:", cls_x.shape)
+        print("Shape of image features:", x[x,1:,:].shape)
+        
         return cls_x, x[:,1:,:]
