@@ -121,11 +121,12 @@ class XCLIP(CLIP):
         print("Shape of image before encoding:", image.shape)
 
         cls_features, img_features = self.encode_image(image)
+        
         img_features = self.prompts_visual_ln(img_features)
         img_features = img_features @ self.prompts_visual_proj
 
         print("Shape of img_features:", img_features.shape)
-        print("Initial values of the vision pooled output:", img_features[0,:3])
+        print("Initial values of img_features:", img_features[0,:3, :3])
         
         cls_features = cls_features.view(b, t, -1)
         img_features = img_features.view(b,t,-1,cls_features.shape[-1])
