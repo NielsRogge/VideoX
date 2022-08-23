@@ -72,8 +72,15 @@ class ResidualAttentionBlock(nn.Module):
         return self.attn(x, x, x, need_weights=False, attn_mask=self.attn_mask)[0]
 
     def forward(self, x: torch.Tensor):
+        print("Hidden states before self-attention:", x[0,:3,:3])
+
         x = x + self.attention(self.ln_1(x))
+
+        print("Hidden states after self-attention:", x[:3,0,:3])
+
         x = x + self.mlp(self.ln_2(x))
+
+        print("Hidden states after MLP:", x[:3,0,:3])
         return x
 
 class Transformer(nn.Module):
