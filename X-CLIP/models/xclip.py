@@ -102,12 +102,15 @@ class XCLIP(CLIP):
         x = self.transformer(x)
         x = x.permute(1, 0, 2)  # LND -> NLD
         x = self.ln_final(x)
+
+        print("Initial values of final hidden states after Text encoder:", x[0,:3,:3])
+
         # x.shape = [batch_size, n_ctx, transformer.width]
         # take features from the eot embedding (eot_token is the highest number in each sequence)
         x = x[torch.arange(x.shape[0]), eos_indx] @ self.text_projection
         x = x.reshape(K, -1)
         
-        print("Initial values of the text pooled output:", x[0,:3])
+        # print("Initial values of the text pooled output:", x[0,:3])
         
         return x
 
