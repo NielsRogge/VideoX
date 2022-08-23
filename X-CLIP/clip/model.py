@@ -74,9 +74,13 @@ class ResidualAttentionBlock(nn.Module):
     def forward(self, x: torch.Tensor):
         print("Hidden states before self-attention:", x[:3,0,:3])
 
+        print("Hidden states after layer norm 1:", self.ln_1(x)[:3,0,:3])
+
+        print("Hidden states after self-attention:", self.attention(self.ln_1(x))[:3,0,:3])
+
         x = x + self.attention(self.ln_1(x))
 
-        print("Hidden states after self-attention:", x[:3,0,:3])
+        print("Hidden states after self-attention + residual:", x[:3,0,:3])
 
         x = x + self.mlp(self.ln_2(x))
 
