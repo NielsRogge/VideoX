@@ -144,6 +144,6 @@ class CrossFrameCommunicationTransformer(nn.Module):
             cls_x = cls_x @ self.proj
         
         print("Shape of cls features:", cls_x.shape)
-        print("Shape of image features:", x[x,1:,:].shape)
+        print("Shape of image features:", x[:,1:,:].shape)
         
         return cls_x, x[:,1:,:]
