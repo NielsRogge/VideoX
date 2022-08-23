@@ -133,6 +133,9 @@ class XCLIP(CLIP):
         
         video_features = self.mit(cls_features)
 
+        print("Shape of output of MIT:", video_features.shape)
+        print("First values of output of MIT:", video_features[0,:3])
+
         return video_features, img_features
 
     def cache_text(self, text):
