@@ -81,6 +81,12 @@ class ResidualAttentionBlock(nn.Module):
 
             print("Hidden states after self-attention:", self.attention(self.ln_1(x))[:3,0,:3])
 
+        if self.print_values:
+            print("Query weights:", self.attn.in_proj_weight.data[:512, :][:3,:3])
+            print("Key weights:", self.attn.in_proj_weight.data[512:512*2,:][:3,:3])
+            print("Value weights:", self.attn.in_proj_weight.data[:-512:,:][:3,:3])
+            print("Out projection:", self.attn.out_proj.data[:3,:3])    
+
         x = x + self.attention(self.ln_1(x))
 
         if self.print_values:
