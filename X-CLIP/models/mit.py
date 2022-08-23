@@ -54,6 +54,9 @@ class MultiframeIntegrationTransformer(nn.Module):
     def forward(self, x):
         ori_x = x
         x = x + self.positional_embedding
+
+        print("Hidden states after position embedding:", x[0,:3,:3])
+
         x = x.permute(1, 0, 2)
         x = self.resblocks(x)
         x = x.permute(1, 0, 2)  
