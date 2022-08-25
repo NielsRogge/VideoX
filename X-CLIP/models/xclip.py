@@ -164,6 +164,10 @@ class XCLIP(CLIP):
            
         video_features = video_features / video_features.norm(dim=-1, keepdim=True)
         text_features = text_features / text_features.norm(dim=-1, keepdim=True)
+
+        print("Shape of video features:", video_features.shape)
+        print("Shape of text features:", text_features.shape)
+
         logit_scale = self.logit_scale.exp()
         logits = torch.einsum("bd,bkd->bk", video_features, logit_scale * text_features)
         
